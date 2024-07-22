@@ -53,5 +53,34 @@ def create_fake_data():
     cursor.close()
     conn.close()
 
+
+def create_tableau_customers_table():
+    conn = psycopg2.connect(
+        host="postgres",
+        database="sample_tableau",
+        user="devuser",
+        password="devpasswd"
+    )
+    cursor = conn.cursor()
+    print("Connected to the database")
+    print("Creating the tableau_customers table")
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS customers (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255),
+            email VARCHAR(255),
+            phone_number VARCHAR(255),
+            city VARCHAR(255),
+            country VARCHAR(255),
+            company VARCHAR(255),
+            job_title VARCHAR(255)
+        )
+    """)
+    print("Table created successfully")
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 if __name__ == "__main__":
     create_fake_data()
+    create_tableau_customers_table()
